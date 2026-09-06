@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { CippIcons } from "../../utils/icon-registry";
 import { Button, Box, Typography, Alert, AlertTitle } from "@mui/material";
 import { Grid } from "@mui/system";
 import { useForm, useFormState } from "react-hook-form";
-import { Backup } from "@mui/icons-material";
 import { CippOffCanvas } from "./CippOffCanvas";
 import CippFormComponent from "./CippFormComponent";
 import { CippFormTenantSelector } from "./CippFormTenantSelector";
@@ -34,6 +34,7 @@ export const CippBackupScheduleDrawer = ({
       antiphishing: true,
       CippWebhookAlerts: true,
       CippScriptedAlerts: true,
+      CippCustomVariables: true,
     },
   });
 
@@ -58,6 +59,7 @@ export const CippBackupScheduleDrawer = ({
         antiphishing: true,
         CippWebhookAlerts: true,
         CippScriptedAlerts: true,
+        CippCustomVariables: true,
       });
       // Call onSuccess callback if provided
       if (onSuccess) {
@@ -109,15 +111,16 @@ export const CippBackupScheduleDrawer = ({
       antiphishing: true,
       CippWebhookAlerts: true,
       CippScriptedAlerts: true,
+      CippCustomVariables: true,
     });
   };
 
   return (
     <>
       <PermissionButton
-        requiredPermissions={requiredPermissions}
+        {...(PermissionButton !== Button ? { requiredPermissions } : {})}
         onClick={() => setDrawerVisible(true)}
-        startIcon={<Backup />}
+        startIcon={<CippIcons.Backup />}
       >
         {buttonText}
       </PermissionButton>
@@ -264,6 +267,14 @@ export const CippBackupScheduleDrawer = ({
                 type="switch"
                 label="Scripted Alerts Configuration"
                 name="CippScriptedAlerts"
+                formControl={formControl}
+              />
+            </Grid>
+            <Grid size={{ md: 6, xs: 12 }}>
+              <CippFormComponent
+                type="switch"
+                label="Custom Variables"
+                name="CippCustomVariables"
                 formControl={formControl}
               />
             </Grid>
